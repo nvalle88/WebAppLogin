@@ -1,0 +1,71 @@
+@model bd.webappth.entidades.ViewModels.Login
+@{
+    ViewData["Title"] = "Login";
+}
+<div id="content" class="container center-block" >
+    <div class="row">
+        @*@{ await Html.RenderPartialAsync("_LoginText"); }*@
+        <div class="col-lg-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <div class="center-block no-padding">
+                <form asp-action="Login" method="POST" id="login-form" class="smart-form client-form">
+                    <header>
+                        <img src="~/img/Imagenes/BdeEcuador.png" alt="" class="center-canvas"  />
+                    </header>
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationBootstrap()
+                    <fieldset>
+                        <section>
+                            @if (@ViewData["Error"].ToString() != "")
+                            {
+                                <div class="col-lg-12">
+                                    <div class="alert alert-block  bordered">
+                                        <a class="close" data-dismiss="alert" href="#"><p><strong> <bold>X</bold></strong></p></a>
+                                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                                        <p>
+                                            <span class="text-info"><strong> <bold> @ViewData["Error"]</bold></strong></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </section>
+                        <section>
+                            <label class="label">Usuario</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                <input asp-for="Usuario" placeholder="Nombre de Usuario">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor entre su nombre de usuario</b>
+                            </label>
+                        </section>
+                        <section>
+                            <label class="label">Contrase&ntilde;a</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-lock"></i>
+                                <input asp-for="Contrasena" type="password" placeholder="contrase&ntilde;a">
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Por favor entre su contrase&ntilde;a</b>
+                            </label>
+                            <div class="note">
+                                <a href="@Url.Action("", "account")"><i class="fa fa-frown-o"></i>Perdi&oacute; su contrase&ntilde;a?</a>
+                            </div>
+                        </section>
+                    </fieldset>
+                    <footer>
+                        <button type="submit" class="btn btn-primary">
+                            Aceptar
+                        </button>
+                    </footer>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script type="text/javascript">
+
+
+    </script>
+}
+
