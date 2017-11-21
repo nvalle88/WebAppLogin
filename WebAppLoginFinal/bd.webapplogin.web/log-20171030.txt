@@ -1,0 +1,128 @@
+2017-10-30 09:08:27.224 -06:00 [Debug] Hosting starting
+2017-10-30 09:08:27.330 -06:00 [Debug] Hosting starting
+2017-10-30 09:08:27.561 -06:00 [Debug] Hosting started
+2017-10-30 09:08:27.561 -06:00 [Debug] Hosting started
+2017-10-30 09:08:27.733 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" started.
+2017-10-30 09:08:27.734 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" started.
+2017-10-30 09:08:27.733 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" started.
+2017-10-30 09:08:27.736 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" started.
+2017-10-30 09:08:27.746 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" reset.
+2017-10-30 09:08:27.746 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" reset.
+2017-10-30 09:08:27.769 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" disconnecting.
+2017-10-30 09:08:27.769 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" disconnecting.
+2017-10-30 09:08:27.799 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" stopped.
+2017-10-30 09:08:27.799 -06:00 [Debug] Connection id ""0HL8VL09GCRK8"" stopped.
+2017-10-30 09:08:27.967 -06:00 [Information] Request starting HTTP/1.1 GET http://localhost:53318/  
+2017-10-30 09:08:27.974 -06:00 [Information] Request starting HTTP/1.1 GET http://localhost:53318/  
+2017-10-30 09:08:28.210 -06:00 [Debug] The request path "/" does not match a supported file type
+2017-10-30 09:08:28.210 -06:00 [Debug] The request path "/" does not match a supported file type
+2017-10-30 09:08:28.595 -06:00 [Debug] Request successfully matched the route with name '"default"' and template '"{controller=Home}/{action=Index}/{id?}"'.
+2017-10-30 09:08:28.595 -06:00 [Debug] Request successfully matched the route with name '"default"' and template '"{controller=Home}/{action=Index}/{id?}"'.
+2017-10-30 09:08:28.799 -06:00 [Debug] Executing action "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)"
+2017-10-30 09:08:28.801 -06:00 [Debug] Executing action "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)"
+2017-10-30 09:08:28.888 -06:00 [Information] Executing action method "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)" with arguments (null) - ModelState is Valid
+2017-10-30 09:08:28.888 -06:00 [Information] Executing action method "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)" with arguments (null) - ModelState is Valid
+2017-10-30 09:08:28.894 -06:00 [Fatal] Este es un log
+2017-10-30 09:08:28.894 -06:00 [Fatal] Este es un log
+2017-10-30 09:08:28.902 -06:00 [Debug] Executed action method "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult".
+2017-10-30 09:08:28.902 -06:00 [Debug] Executed action method "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)", returned result "Microsoft.AspNetCore.Mvc.ViewResult".
+2017-10-30 09:08:29.053 -06:00 [Debug] View lookup cache miss for view '"Index"' in controller '"Home"'.
+2017-10-30 09:08:29.053 -06:00 [Debug] View lookup cache miss for view '"Index"' in controller '"Home"'.
+2017-10-30 09:08:29.078 -06:00 [Debug] Code generation for the Razor file at '"/Views/Home/Index.cshtml"' started.
+2017-10-30 09:08:29.079 -06:00 [Debug] Code generation for the Razor file at '"/Views/Home/Index.cshtml"' started.
+2017-10-30 09:08:29.738 -06:00 [Debug] Code generation for the Razor file at '"/Views/Home/Index.cshtml"' completed in 652.6056ms.
+2017-10-30 09:08:29.739 -06:00 [Debug] Code generation for the Razor file at '"/Views/Home/Index.cshtml"' completed in 652.6056ms.
+2017-10-30 09:08:29.755 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Home/Index.cshtml"' started.
+2017-10-30 09:08:29.756 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Home/Index.cshtml"' started.
+2017-10-30 09:08:31.335 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Home/Index.cshtml"' completed in 1577.2324ms.
+2017-10-30 09:08:31.335 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Home/Index.cshtml"' completed in 1577.2324ms.
+2017-10-30 09:08:31.345 -06:00 [Debug] Code generation for the Razor file at '"/Views/_ViewStart.cshtml"' started.
+2017-10-30 09:08:31.345 -06:00 [Debug] Code generation for the Razor file at '"/Views/_ViewStart.cshtml"' started.
+2017-10-30 09:08:31.355 -06:00 [Debug] Code generation for the Razor file at '"/Views/_ViewStart.cshtml"' completed in 7.9055ms.
+2017-10-30 09:08:31.355 -06:00 [Debug] Code generation for the Razor file at '"/Views/_ViewStart.cshtml"' completed in 7.9055ms.
+2017-10-30 09:08:31.357 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/_ViewStart.cshtml"' started.
+2017-10-30 09:08:31.357 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/_ViewStart.cshtml"' started.
+2017-10-30 09:08:31.420 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/_ViewStart.cshtml"' completed in 61.0605ms.
+2017-10-30 09:08:31.421 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/_ViewStart.cshtml"' completed in 61.0605ms.
+2017-10-30 09:08:31.430 -06:00 [Debug] The view '"Index"' was found.
+2017-10-30 09:08:31.430 -06:00 [Debug] The view '"Index"' was found.
+2017-10-30 09:08:31.436 -06:00 [Information] Executing ViewResult, running view at path "/Views/Home/Index.cshtml".
+2017-10-30 09:08:31.437 -06:00 [Information] Executing ViewResult, running view at path "/Views/Home/Index.cshtml".
+2017-10-30 09:08:31.560 -06:00 [Information] User profile is available. Using '"C:\Users\Nestor Yasmani Valle\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2017-10-30 09:08:31.560 -06:00 [Information] User profile is available. Using '"C:\Users\Nestor Yasmani Valle\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2017-10-30 09:08:31.640 -06:00 [Debug] View lookup cache miss for view '"_Layout"' in controller '"Home"'.
+2017-10-30 09:08:31.640 -06:00 [Debug] View lookup cache miss for view '"_Layout"' in controller '"Home"'.
+2017-10-30 09:08:31.644 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Layout.cshtml"' started.
+2017-10-30 09:08:31.644 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Layout.cshtml"' started.
+2017-10-30 09:08:31.725 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Layout.cshtml"' completed in 79.2634ms.
+2017-10-30 09:08:31.725 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Layout.cshtml"' completed in 79.2634ms.
+2017-10-30 09:08:31.728 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Layout.cshtml"' started.
+2017-10-30 09:08:31.728 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Layout.cshtml"' started.
+2017-10-30 09:08:31.862 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Layout.cshtml"' completed in 132.1545ms.
+2017-10-30 09:08:31.862 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Layout.cshtml"' completed in 132.1545ms.
+2017-10-30 09:08:32.024 -06:00 [Debug] View lookup cache miss for view '"_Header"' in controller '"Home"'.
+2017-10-30 09:08:32.024 -06:00 [Debug] View lookup cache miss for view '"_Header"' in controller '"Home"'.
+2017-10-30 09:08:32.027 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Header.cshtml"' started.
+2017-10-30 09:08:32.027 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Header.cshtml"' started.
+2017-10-30 09:08:32.080 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Header.cshtml"' completed in 50.3801ms.
+2017-10-30 09:08:32.080 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Header.cshtml"' completed in 50.3801ms.
+2017-10-30 09:08:32.083 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Header.cshtml"' started.
+2017-10-30 09:08:32.083 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Header.cshtml"' started.
+2017-10-30 09:08:32.156 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Header.cshtml"' completed in 70.8774ms.
+2017-10-30 09:08:32.156 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Header.cshtml"' completed in 70.8774ms.
+2017-10-30 09:08:32.177 -06:00 [Debug] View lookup cache miss for view '"_TopRight"' in controller '"Home"'.
+2017-10-30 09:08:32.177 -06:00 [Debug] View lookup cache miss for view '"_TopRight"' in controller '"Home"'.
+2017-10-30 09:08:32.180 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_TopRight.cshtml"' started.
+2017-10-30 09:08:32.180 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_TopRight.cshtml"' started.
+2017-10-30 09:08:32.215 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_TopRight.cshtml"' completed in 32.5316ms.
+2017-10-30 09:08:32.215 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_TopRight.cshtml"' completed in 32.5316ms.
+2017-10-30 09:08:32.217 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_TopRight.cshtml"' started.
+2017-10-30 09:08:32.218 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_TopRight.cshtml"' started.
+2017-10-30 09:08:32.307 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_TopRight.cshtml"' completed in 87.1464ms.
+2017-10-30 09:08:32.308 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_TopRight.cshtml"' completed in 87.1464ms.
+2017-10-30 09:08:32.390 -06:00 [Debug] View lookup cache miss for view '"_Aside"' in controller '"Home"'.
+2017-10-30 09:08:32.391 -06:00 [Debug] View lookup cache miss for view '"_Aside"' in controller '"Home"'.
+2017-10-30 09:08:32.394 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Aside.cshtml"' started.
+2017-10-30 09:08:32.394 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Aside.cshtml"' started.
+2017-10-30 09:08:32.444 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Aside.cshtml"' completed in 47.8339ms.
+2017-10-30 09:08:32.444 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Aside.cshtml"' completed in 47.8339ms.
+2017-10-30 09:08:32.446 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Aside.cshtml"' started.
+2017-10-30 09:08:32.446 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Aside.cshtml"' started.
+2017-10-30 09:08:32.577 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Aside.cshtml"' completed in 128.9142ms.
+2017-10-30 09:08:32.577 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Aside.cshtml"' completed in 128.9142ms.
+2017-10-30 09:08:32.626 -06:00 [Debug] View lookup cache miss for view '"_CurrentUser"' in controller '"Home"'.
+2017-10-30 09:08:32.626 -06:00 [Debug] View lookup cache miss for view '"_CurrentUser"' in controller '"Home"'.
+2017-10-30 09:08:32.632 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' started.
+2017-10-30 09:08:32.632 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' started.
+2017-10-30 09:08:32.646 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' completed in 9.976ms.
+2017-10-30 09:08:32.646 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' completed in 9.976ms.
+2017-10-30 09:08:32.648 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' started.
+2017-10-30 09:08:32.648 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' started.
+2017-10-30 09:08:32.697 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' completed in 46.5851ms.
+2017-10-30 09:08:32.697 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_CurrentUser.cshtml"' completed in 46.5851ms.
+2017-10-30 09:08:32.719 -06:00 [Debug] View lookup cache miss for view '"_Scripts"' in controller '"Home"'.
+2017-10-30 09:08:32.719 -06:00 [Debug] View lookup cache miss for view '"_Scripts"' in controller '"Home"'.
+2017-10-30 09:08:32.722 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Scripts.cshtml"' started.
+2017-10-30 09:08:32.722 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Scripts.cshtml"' started.
+2017-10-30 09:08:32.749 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Scripts.cshtml"' completed in 25.3352ms.
+2017-10-30 09:08:32.749 -06:00 [Debug] Code generation for the Razor file at '"/Views/Shared/_Scripts.cshtml"' completed in 25.3352ms.
+2017-10-30 09:08:32.752 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Scripts.cshtml"' started.
+2017-10-30 09:08:32.752 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Scripts.cshtml"' started.
+2017-10-30 09:08:32.830 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Scripts.cshtml"' completed in 76.4201ms.
+2017-10-30 09:08:32.831 -06:00 [Debug] Compilation of the generated code for the Razor file at '"/Views/Shared/_Scripts.cshtml"' completed in 76.4201ms.
+2017-10-30 09:08:32.961 -06:00 [Information] Executed action "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)" in 4144.2414ms
+2017-10-30 09:08:32.962 -06:00 [Information] Executed action "bd.webappth.web.Controllers.HomeController.Index (bd.webappth.web)" in 4144.2414ms
+2017-10-30 09:08:32.977 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" completed keep alive response.
+2017-10-30 09:08:32.977 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" completed keep alive response.
+2017-10-30 09:08:32.993 -06:00 [Information] Request finished in 5076.0488ms 200 text/html; charset=utf-8
+2017-10-30 09:08:32.993 -06:00 [Information] Request finished in 5076.0488ms 200 text/html; charset=utf-8
+2017-10-30 09:10:17.687 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" received FIN.
+2017-10-30 09:10:17.687 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" received FIN.
+2017-10-30 09:10:17.720 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" disconnecting.
+2017-10-30 09:10:17.720 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" disconnecting.
+2017-10-30 09:10:17.723 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" sending FIN.
+2017-10-30 09:10:17.723 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" sending FIN.
+2017-10-30 09:10:17.732 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" sent FIN with status "0".
+2017-10-30 09:10:17.732 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" sent FIN with status "0".
+2017-10-30 09:10:17.734 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" stopped.
+2017-10-30 09:10:17.735 -06:00 [Debug] Connection id ""0HL8VL09GCRK7"" stopped.

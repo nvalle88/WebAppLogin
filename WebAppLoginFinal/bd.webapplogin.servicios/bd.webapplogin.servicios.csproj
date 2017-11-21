@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\ISeguridadServicio.cs" />
+    <Compile Remove="Servicios\AreaConocimientoServicio.cs" />
+    <Compile Remove="Servicios\CiudadServicio.cs" />
+    <Compile Remove="Servicios\EstudioServicio.cs" />
+    <Compile Remove="Servicios\EtniaServicio.cs" />
+    <Compile Remove="Servicios\FactorServicio.cs" />
+    <Compile Remove="Servicios\GeneroServicio.cs" />
+    <Compile Remove="Servicios\InstitucionFinancieraServicio.cs" />
+    <Compile Remove="Servicios\ItemViaticoServicio.cs" />
+    <Compile Remove="Servicios\MarcaServicio.cs" />
+    <Compile Remove="Servicios\ModeloServicio.cs" />
+    <Compile Remove="Servicios\NacionalidadServicio.cs" />
+    <Compile Remove="Servicios\PaisServicio.cs" />
+    <Compile Remove="Servicios\PaqueteInformaticoServicio.cs" />
+    <Compile Remove="Servicios\ParentescosServicio.cs" />
+    <Compile Remove="Servicios\ParroquiaService.cs" />
+    <Compile Remove="Servicios\ProvinciaServicio.cs" />
+    <Compile Remove="Servicios\SeguridadServicio.cs" />
+    <Compile Remove="Servicios\SexoServicio.cs" />
+    <Compile Remove="Servicios\SucursalServicio.cs" />
+    <Compile Remove="Servicios\TipoAccionPersonalServicio.cs" />
+    <Compile Remove="Servicios\TipoActivoFijoServicio.cs" />
+    <Compile Remove="Servicios\TipoArticuloServicio.cs" />
+    <Compile Remove="Servicios\TipoCertificadoServicio.cs" />
+    <Compile Remove="Servicios\TipoConcursoServicio.cs" />
+    <Compile Remove="Servicios\TipoDiscapacidadServicio.cs" />
+    <Compile Remove="Servicios\TipoEnfermedadServicio.cs" />
+    <Compile Remove="Servicios\TipoIdentificacionServicio.cs" />
+    <Compile Remove="Servicios\TipoMovimientoInternoServicio.cs" />
+    <Compile Remove="Servicios\TipoPermisoServicio.cs" />
+    <Compile Remove="Servicios\TipoProvisionServicio.cs" />
+    <Compile Remove="Servicios\TipoRMUServicio.cs" />
+    <Compile Remove="Servicios\TipoSangreServicio.cs" />
+    <Compile Remove="Servicios\TipoTransporteServicio.cs" />
+    <Compile Remove="Servicios\TipoViaticoServicio.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bd.log.guardar" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bd.webapplogin.entidades\bd.webapplogin.entidades.csproj" />
+  </ItemGroup>
+
+</Project>
