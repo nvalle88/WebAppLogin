@@ -52,7 +52,7 @@ namespace bd.webappth.web.Controllers.MVC
 
            var response = await apiServicio.ObtenerElementoAsync1<Response>(login,
                                                              new Uri(WebApp.BaseAddressSeguridad),
-                                                             "/api/Adscpassws/Login");
+                                                             "api/Adscpassws/Login");
 
            
 

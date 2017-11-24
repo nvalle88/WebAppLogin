@@ -49,10 +49,11 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                var sistema = await ObtenerHostSistema(id, baseAddreess);
-                WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                // WebApp.BaseAddress = "http://localhost:6000";
-                //WebApp.BaseAddressRM = "http://localhost:9000";
+                //    var sistema = await ObtenerHostSistema(id, baseAddreess);
+                //    WebApp.BaseAddressSeguridad = sistema.AdstHost;
+                WebApp.BaseAddressSeguridad = "http://localhost:53317";
+            // WebApp.BaseAddress = "http://localhost:6000";
+            //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
             catch (Exception ex)
