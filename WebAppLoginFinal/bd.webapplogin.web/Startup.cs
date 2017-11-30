@@ -2,8 +2,10 @@
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.IO;
 
 namespace bd.webappth.web
 {
@@ -37,11 +40,17 @@ namespace bd.webappth.web
 
             services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
             {
-                
+               
+                var protectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\"));
+                options.OnSecurityStampRefreshingPrincipal = options.OnSecurityStampRefreshingPrincipal;
+                options.Cookies.ApplicationCookie.DataProtectionProvider = protectionProvider;
+                options.Cookies.ApplicationCookie.TicketDataFormat = new TicketDataFormat(protectionProvider.CreateProtector("Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationMiddleware", "Cookies", "v2"));
                 options.Cookies.ApplicationCookie.LoginPath = new PathString("/Login/Index");
                 options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Login/Index");
+                options.Cookies.ApplicationCookie.CookiePath = new PathString("/CookiePath");
 
-                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(2);
+
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(10);
 
             })
            
@@ -143,6 +152,7 @@ namespace bd.webappth.web
                     name: "default",
                     template: "{controller=Homes}/{action=Index}/{id?}");
             });
+
         }
     }
 }

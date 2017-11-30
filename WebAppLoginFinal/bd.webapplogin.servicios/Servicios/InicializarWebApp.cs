@@ -51,7 +51,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 //    var sistema = await ObtenerHostSistema(id, baseAddreess);
                 //    WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                WebApp.BaseAddressSeguridad = "http://localhost:53317";
+                WebApp.BaseAddressSeguridad = "http://localhost:85/";
             // WebApp.BaseAddress = "http://localhost:6000";
             //WebApp.BaseAddressRM = "http://localhost:9000";
 

@@ -37,7 +37,7 @@
             @(IsSectionDefined("topright") ? RenderSection("topright", User.Identity.IsAuthenticated) : Html.Partial("_TopRight", User.Identity.IsAuthenticated))
         </section>
     </header>
-    @{ Html.RenderPartialIf("_Aside", User.Identity.IsAuthenticated); }
+    @*@{ Html.RenderPartialIf("_Aside", User.Identity.IsAuthenticated); }*@
     <div id="main" role="main">
         @{ Html.RenderPartialIf("_Ribbon", User.Identity.IsAuthenticated); }
         @RenderBody()

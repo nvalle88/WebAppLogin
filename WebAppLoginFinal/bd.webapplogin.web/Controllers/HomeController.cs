@@ -10,6 +10,7 @@ using System.Threading;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Interfaces;
+using bd.webappth.web.Controllers.MVC;
 
 namespace bd.webappth.web.Controllers
 {
@@ -66,42 +67,83 @@ namespace bd.webappth.web.Controllers
 
         public async Task<IActionResult> Menu()
         {
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-
-            var lista = new List<Adscsist>();
             try
             {
-               lista = await apiServicio.Listar<Adscsist>(NombreUsuario, new Uri(WebApp.BaseAddressSeguridad), "api/Adscsists/ListarAdscSistemaMiembro");
 
-                return View(lista);
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                var lista = new List<Adscsist>();
+                try
+                {
+                    lista = await apiServicio.Listar<Adscsist>(NombreUsuario, new Uri(WebApp.BaseAddressSeguridad), "api/Adscsists/ListarAdscSistemaMiembro");
+
+                    return View(lista);
+                }
+                catch (Exception ex)
+                {
+                    //await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    //{
+                    //    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    //    Message = "Listando estados civiles",
+                    //    ExceptionTrace = ex,
+                    //    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    //    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    //    UserName = "Usuario APP webappth"
+                    //});
+                    return BadRequest();
+                }
             }
             catch (Exception ex)
             {
-                //await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                //{
-                //    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                //    Message = "Listando estados civiles",
-                //    ExceptionTrace = ex,
-                //    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                //    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                //    UserName = "Usuario APP webappth"
-                //});
-                return BadRequest();
+
+                return RedirectToAction(nameof(LoginController.Index), "Login");
             }
             //return View();
         }
 
         public async Task<ActionResult> AbrirSistema(string host)
         {
+            var a = new Guid();
             var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
             var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
             var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-            //return  Redirect(host+"?miembro=" + NombreUsuario);
-            return  Redirect("http://localhost:53317/" + "?miembro=" + NombreUsuario);
+           
+
+            var permiso = new PermisoUsuario
+            {
+                Token = token,
+                Usuario = NombreUsuario,
+            };
+
+
+            var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermisoTemp");
+
+            //respuesta.Result.IsSuccess = true;
+            if (respuesta.Result.IsSuccess)
+            {
+                
+                a = Guid.NewGuid(); 
+
+                var permisoTemp = new PermisoUsuario
+                {
+                    Token = Convert.ToString(a),
+                    Usuario = NombreUsuario,
+                };
+
+                var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
+                return Redirect("http://localhost:51326/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
+            }
+            else
+            {
+                return null;
+                //context.Fail();
+            }
+            //return  Redirect(host+"?miembro=" + NombreUsuario);           
+           
         }
 
     }
