@@ -94,9 +94,9 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme));
+            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
-           await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+           await HttpContext.Authentication.SignInAsync("Cookies", principal, new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = true });
 
             if (string.IsNullOrEmpty(returnUrl))
             {
@@ -197,7 +197,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!adscpassw.Equals(null))
                 {
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri("http://localhost:85/"),
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddress),
                                                                   "api/Adscpassws/SeleccionarMiembroLogueado");
 
 
@@ -228,7 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
                 {
-                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri("http://localhost:85/"),
+                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddress),
                                                                  "api/Adscpassws/EliminarToken");
 
                     if (response.IsSuccess)
