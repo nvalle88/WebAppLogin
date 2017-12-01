@@ -197,7 +197,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!adscpassw.Equals(null))
                 {
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddress),
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                   "api/Adscpassws/SeleccionarMiembroLogueado");
 
 
@@ -228,7 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
                 {
-                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddress),
+                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                  "api/Adscpassws/EliminarToken");
 
                     if (response.IsSuccess)
