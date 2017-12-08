@@ -184,7 +184,7 @@ namespace bd.webappth.web.Controllers.MVC
             var response = await EliminarToken(adscpassw);
             if (response.IsSuccess)
             { 
-            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.Authentication.SignOutAsync("Cookies");
             return RedirectToAction(nameof(LoginController.Index), "Login");
             }
             return RedirectToAction(nameof(HomesController.Menu), "Homes");

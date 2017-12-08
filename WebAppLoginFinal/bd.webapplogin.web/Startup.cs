@@ -136,7 +136,6 @@ namespace bd.webappth.web
                 CookieName = "ASPTest",
                 ExpireTimeSpan = new TimeSpan(1, 0, 0), //1 hour
                 DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\")),
-                CookieDomain = "http://localhost:81/webappth"
             });
             //app.UseIdentity();
 

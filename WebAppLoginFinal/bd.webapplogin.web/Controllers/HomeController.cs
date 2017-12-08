@@ -118,14 +118,10 @@ namespace bd.webappth.web.Controllers
                 Token = token,
                 Usuario = NombreUsuario,
             };
-
-
             var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermisoTemp");
-
             //respuesta.Result.IsSuccess = true;
             if (respuesta.Result.IsSuccess)
             {
-                
                 a = Guid.NewGuid(); 
 
                 var permisoTemp = new PermisoUsuario
@@ -134,8 +130,10 @@ namespace bd.webappth.web.Controllers
                     Usuario = NombreUsuario,
                 };
 
+
+
                 var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
-                return Redirect("http://localhost:81/webappth/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
+                return Redirect(host+"/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
             }
             else
             {
