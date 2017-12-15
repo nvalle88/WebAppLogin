@@ -77,7 +77,7 @@ namespace bd.webappth.web
         {
 
             app.UseExceptionHandler("/Home/Error");
-           
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 #pragma warning disable CS0612 // El tipo o el miembro están obsoletos
@@ -123,8 +123,10 @@ namespace bd.webappth.web
                 
             }
 
-           
-
+            var TiempoVidaCookieHoras = Configuration.GetSection("TiempoVidaCookieHoras").Value;
+            var TiempoVidaCookieMinutos = Configuration.GetSection("TiempoVidaCookieMinutos").Value;
+            var TiempoVidaCookieSegundos = Configuration.GetSection("TiempoVidaCookieSegundos").Value;
+            
             app.UseStaticFiles();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -134,7 +136,7 @@ namespace bd.webappth.web
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieName = "ASPTest",
-                ExpireTimeSpan = new TimeSpan(1, 0, 0), //1 hour
+                ExpireTimeSpan = new TimeSpan(Convert.ToInt32(TiempoVidaCookieHoras), Convert.ToInt32(TiempoVidaCookieMinutos), Convert.ToInt32(TiempoVidaCookieSegundos)), //1 hour
                 DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\")),
             });
             //app.UseIdentity();

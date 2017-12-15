@@ -100,7 +100,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (string.IsNullOrEmpty(returnUrl))
             {
-                return RedirectToAction(nameof(HomesController.Menu), "Homes");
+                return RedirectToActionPermanent(nameof(HomesController.Menu), "Homes");
             }
 
             return LocalRedirect(returnUrl);

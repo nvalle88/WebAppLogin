@@ -14,6 +14,7 @@ using bd.webappth.web.Controllers.MVC;
 
 namespace bd.webappth.web.Controllers
 {
+    
     public class HomesController : Controller
     {
         private readonly IApiServicio apiServicio;
@@ -23,7 +24,7 @@ namespace bd.webappth.web.Controllers
             this.apiServicio=apiServicio;
         }
 
-        [Authorize]
+        
         public IActionResult Index()
         {
             //var b = string.Empty;
@@ -84,15 +85,7 @@ namespace bd.webappth.web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    //{
-                    //    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    //    Message = "Listando estados civiles",
-                    //    ExceptionTrace = ex,
-                    //    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    //    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    //    UserName = "Usuario APP webappth"
-                    //});
+                  
                     return BadRequest();
                 }
             }
@@ -106,39 +99,48 @@ namespace bd.webappth.web.Controllers
 
         public async Task<ActionResult> AbrirSistema(string host)
         {
-            var a = new Guid();
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-           
-
-            var permiso = new PermisoUsuario
+            try
             {
-                Token = token,
-                Usuario = NombreUsuario,
-            };
-            var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermisoTemp");
-            //respuesta.Result.IsSuccess = true;
-            if (respuesta.Result.IsSuccess)
-            {
-                a = Guid.NewGuid(); 
+                var a = new Guid();
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                var permisoTemp = new PermisoUsuario
+
+
+                var permiso = new PermisoUsuario
                 {
-                    Token = Convert.ToString(a),
+                    Token = token,
                     Usuario = NombreUsuario,
                 };
+                var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermisoTemp");
+                //respuesta.Result.IsSuccess = true;
+                if (respuesta.Result.IsSuccess)
+                {
+                    a = Guid.NewGuid();
+
+                    var permisoTemp = new PermisoUsuario
+                    {
+                        Token = Convert.ToString(a),
+                        Usuario = NombreUsuario,
+                    };
 
 
 
-                var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
-                return Redirect(host+"/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
+                    var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
+                    return Redirect(host + "/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
+                }
+                else
+                {
+                    return null;
+                    //context.Fail();
+                }
             }
-            else
+            catch (Exception)
             {
-                return null;
-                //context.Fail();
+                return RedirectToAction(nameof(LoginController.Index), "Login");
+             
             }
             //return  Redirect(host+"?miembro=" + NombreUsuario);           
            
