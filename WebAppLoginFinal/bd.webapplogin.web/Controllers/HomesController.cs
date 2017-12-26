@@ -14,7 +14,6 @@ using bd.webappth.web.Controllers.MVC;
 
 namespace bd.webappth.web.Controllers
 {
-    
     public class HomesController : Controller
     {
         private readonly IApiServicio apiServicio;
@@ -24,57 +23,19 @@ namespace bd.webappth.web.Controllers
             this.apiServicio=apiServicio;
         }
 
-        
-        public IActionResult Index()
-        {
-            //var b = string.Empty;
-            var claim = HttpContext.User.Identities.Where(x=>x.NameClaimType==ClaimTypes.Name).FirstOrDefault();
-            var token= claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-            //var identity = (ClaimsPrincipal.Current.Claims.Where(x => x.Type == ClaimTypes.Name)).First();
-            //var name= claim.Name;
-            return View();
-        }
-
-        
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
-        }
         public IActionResult AccesoDenegado()
         {
             return View();
         }
 
-        public IActionResult Salir()
-        {
-            return View();
-        }
-
+        [Authorize(ActiveAuthenticationSchemes ="Cookies")]
         public async Task<IActionResult> Menu()
         {
             try
             {
-
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
 
                 var lista = new List<Adscsist>();
                 try
@@ -97,6 +58,7 @@ namespace bd.webappth.web.Controllers
             //return View();
         }
 
+        [Authorize(ActiveAuthenticationSchemes = "Cookies")]
         public async Task<ActionResult> AbrirSistema(string host)
         {
 
@@ -106,8 +68,6 @@ namespace bd.webappth.web.Controllers
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-
 
                 var permiso = new PermisoUsuario
                 {
@@ -130,6 +90,7 @@ namespace bd.webappth.web.Controllers
 
                     var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
                     return Redirect(host + "/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
+
                 }
                 else
                 {

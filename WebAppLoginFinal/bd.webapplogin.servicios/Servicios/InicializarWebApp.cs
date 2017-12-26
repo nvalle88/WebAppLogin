@@ -27,30 +27,14 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
-        public static async Task InicializarWeb(string id, string baseAddreess)
-            {
-            try
-            {
-                //var sistema= await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = baseAddreess;
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-        }
-
-        public static async Task InicializarSeguridad(string id, string baseAddreess)
+        public static async Task InicializarSeguridad(string baseAddreess)
         {
             try
             {
-                //    var sistema = await ObtenerHostSistema(id, baseAddreess);
-                //    WebApp.BaseAddressSeguridad = sistema.AdstHost;
+             
                 WebApp.BaseAddressSeguridad = baseAddreess;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -64,14 +48,11 @@ namespace bd.webappth.servicios.Servicios
                 var sistema = await ObtenerHostSistema(id, baseAddress);
                 AppGuardarLog.BaseAddress = sistema.AdstHost;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
-
         }
-
-
         #endregion
     }
 }

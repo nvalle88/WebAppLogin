@@ -2,14 +2,11 @@
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -38,18 +35,9 @@ namespace bd.webappth.web
         public async void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
-            //{
-            //})
-           
-            //.AddDefaultTokenProviders();
-            // Add framework services.
-            services.AddMvc(
-         
-            );
+            services.AddMvc();
 
             var appSettings = Configuration.GetSection("AppSettings");
-
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -59,6 +47,8 @@ namespace bd.webappth.web
                                   policy => policy.Requirements.Add(new RolesRequirement()));
             });
 
+
+
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -67,7 +57,7 @@ namespace bd.webappth.web
             var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
             var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
 
-            await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, HostSeguridad);
+            await InicializarWebApp.InicializarSeguridad(HostSeguridad);
             await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
 
         }
@@ -97,7 +87,7 @@ namespace bd.webappth.web
             Log.Logger = logger;
             loggerFactory.AddSerilog();
 
-           
+
 
 
 
@@ -110,36 +100,36 @@ namespace bd.webappth.web
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
                 {
-                    
+
                     //serviceScope.ServiceProvider.GetService<LogDbContext>()
                     //         .Database.Migrate();
 
-                   // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
+                    // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
                 }
 
             }
             else
             {
-                
+
             }
 
             var TiempoVidaCookieHoras = Configuration.GetSection("TiempoVidaCookieHoras").Value;
             var TiempoVidaCookieMinutos = Configuration.GetSection("TiempoVidaCookieMinutos").Value;
             var TiempoVidaCookieSegundos = Configuration.GetSection("TiempoVidaCookieSegundos").Value;
-            
+
             app.UseStaticFiles();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",
-                LoginPath = new PathString("/Login/Login"),
-                AccessDeniedPath = new PathString("/Home/Forbidden"),
+                LoginPath = new PathString("/Login/Index"),
+                AccessDeniedPath = new PathString("/Homes/AccesoDenegado"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieName = "ASPTest",
-                ExpireTimeSpan = new TimeSpan(Convert.ToInt32(TiempoVidaCookieHoras), Convert.ToInt32(TiempoVidaCookieMinutos), Convert.ToInt32(TiempoVidaCookieSegundos)), //1 hour
+                ExpireTimeSpan = new TimeSpan(Convert.ToInt32(TiempoVidaCookieHoras), Convert.ToInt32(TiempoVidaCookieMinutos), Convert.ToInt32(TiempoVidaCookieSegundos)),
                 DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\")),
             });
-            //app.UseIdentity();
 
             app.UseMvc(routes =>
             {
