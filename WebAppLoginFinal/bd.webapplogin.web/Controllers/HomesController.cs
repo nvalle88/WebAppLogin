@@ -27,7 +27,10 @@ namespace bd.webappth.web.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Método encargado de listar los sistemas a los que tiene acceso el usuario autenticado
+        /// </summary>
+        /// <returns></returns>
         [Authorize(ActiveAuthenticationSchemes ="Cookies")]
         public async Task<IActionResult> Menu()
         {
@@ -57,7 +60,11 @@ namespace bd.webappth.web.Controllers
             }
             //return View();
         }
-
+        /// <summary>
+        /// Método encargado de abrir el sistema que se ha solicitado al hacer click sobre él en la vista
+        /// </summary>
+        /// <param name="host">El host del donde se encuentra el sistema solicitado se obtiene desde la vista...</param>
+        /// <returns></returns>
         [Authorize(ActiveAuthenticationSchemes = "Cookies")]
         public async Task<ActionResult> AbrirSistema(string host)
         {
@@ -65,6 +72,9 @@ namespace bd.webappth.web.Controllers
             try
             {
                 var a = new Guid();
+                /// <summary>
+                /// Se obtiene información del usuario autenticado
+                /// </summary>
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
@@ -74,6 +84,10 @@ namespace bd.webappth.web.Controllers
                     Token = token,
                     Usuario = NombreUsuario,
                 };
+
+                /// <summary>
+                /// Se válida si el usuario tiene el token válido para realizar la acción de abrir el sistema
+                /// </summary>
                 var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermisoTemp");
                 //respuesta.Result.IsSuccess = true;
                 if (respuesta.Result.IsSuccess)
@@ -85,9 +99,10 @@ namespace bd.webappth.web.Controllers
                         Token = Convert.ToString(a),
                         Usuario = NombreUsuario,
                     };
-
-
-
+                    /// <summary>
+                    /// Se salva un Token temporal en la base de datos por usuario para que al abrir el otro sistema este válide 
+                    /// el token fue generado por esta aplicación 
+                    /// </summary>
                     var salvarToken = await apiServicio.InsertarAsync<Response>(permisoTemp, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarTokenTemp");
                     return Redirect(host + "/Login/Login" + "?miembro=" + NombreUsuario + "&token=" + a.ToString());
 
@@ -95,7 +110,6 @@ namespace bd.webappth.web.Controllers
                 else
                 {
                     return null;
-                    //context.Fail();
                 }
             }
             catch (Exception)

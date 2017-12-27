@@ -44,7 +44,13 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+    /// <summary>
+    /// Autentica al usuario y crea el token en la base de datos
+    /// autentica el usuario en la cookie basado basado en los Claims 
+    /// </summary>
+    /// <param name="login"></param>
+    /// <param name="returnUrl"></param>
+    /// <returns></returns>
         public async Task<IActionResult> Login(Login login,string returnUrl=null)
         {
 
@@ -99,7 +105,10 @@ namespace bd.webappth.web.Controllers.MVC
             return LocalRedirect(returnUrl);
 
         }
-
+        /// <summary>
+        /// Elimina el Token de la base de datos y desautentica al usuario de la Cookie
+        /// </summary>
+        /// <returns></returns>
         [Authorize(ActiveAuthenticationSchemes = "Cookies")]
         public async Task<IActionResult> Salir()
         {

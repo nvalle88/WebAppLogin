@@ -17,8 +17,16 @@ using System.IO;
 
 namespace bd.webappth.web
 {
+    /// <summary>
+    /// Clase donde inicia la aplicación 
+    /// Para más información visitar:https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Donde inicia la aplicación, y se carga el fichero de configuración
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -35,12 +43,26 @@ namespace bd.webappth.web
         public async void ConfigureServices(IServiceCollection services)
         {
 
+            /// <summary>
+            /// Se añaden los servicios necesarios para el funcionaminto del aplicativo.
+            /// para poder utilizar la inyección de dependencia.
+            /// </summary>
             services.AddMvc();
 
             var appSettings = Configuration.GetSection("AppSettings");
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
 
+
+            /// <summary>
+            /// Se añade a las politicas de autorización la autorización personalizada.
+            /// que válida si el usuario está autenticado y si tiene acceso al recurso solicitado 
+            /// esta autorización se obtiene desde la base de datos 
+            /// Si el grupo del usuario está autorizado a realizar la acción que ha solicitado.
+            /// </summary>
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("EstaAutorizado",
@@ -48,15 +70,24 @@ namespace bd.webappth.web
             });
 
 
+            
+           
 
-            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-
-            var ServicioSeguridad = Configuration.GetSection("ServicioSeguridad").Value;
+            /// <summary>
+            /// Se lee el fichero appsetting.json según las etiquetas expuestas en este.
+            /// Ejemplo:HostServicioSeguridad es el host donde se encuentran los servicios de Seguridad.
+            ///  ServiciosLog es el nombre con el que se encuentra en la base de datos, en la tabla adscsist
+            ///  de aquí se obtiene el valor del Hostdonde se encuentra el servicio de Log .
+            /// </summary>
             var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
             var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
 
+            /// <summary>
+            /// Se llama a la clase inicializar para darle valor a las variables donde se hospedan los servicios
+            /// que utiliza la aplicación
+            /// Ejemplo:WebApp.BaseAddressSeguridad es el host donde se encuentran los servicios de Seguridad.
+            ///  AppGuardarLog.BaseAddress es el host donde se encuentran los servicios de Log.
+            /// </summary>
             await InicializarWebApp.InicializarSeguridad(HostSeguridad);
             await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
 
@@ -70,9 +101,6 @@ namespace bd.webappth.web
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-#pragma warning disable CS0612 // El tipo o el miembro están obsoletos
-            app.UseApplicationInsightsRequestTelemetry();
-#pragma warning restore CS0612 // El tipo o el miembro están obsoletos
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -86,10 +114,6 @@ namespace bd.webappth.web
             loggerFactory.AddSerilog(logger);
             Log.Logger = logger;
             loggerFactory.AddSerilog();
-
-
-
-
 
             if (env.IsDevelopment())
             {
@@ -113,12 +137,29 @@ namespace bd.webappth.web
 
             }
 
+
+            /// <summary>
+            /// Se lee el fichero appsetting.json según las etiquetas expuestas en este.
+            /// Ejemplo:TiempoVidaCookieHoras Horas que tendra de vida la cookie.
+            /// TiempoVidaCookieMinutos Minutos que tendra de vida la cookie
+            ///  TiempoVidaCookieSegundos Minutos que tendra de vida la cookie.
+            ///  Con estas tres variables mencionadas se conforma el tiempo de vida de la Cookie (ExpireTimeSpan)
+            /// </summary>
             var TiempoVidaCookieHoras = Configuration.GetSection("TiempoVidaCookieHoras").Value;
             var TiempoVidaCookieMinutos = Configuration.GetSection("TiempoVidaCookieMinutos").Value;
             var TiempoVidaCookieSegundos = Configuration.GetSection("TiempoVidaCookieSegundos").Value;
 
+            /// <summary>
+            /// Es para cargar los ficheros estáticos de la aplicación como Css, imagenes etc...
+            /// Configuración por defecto es en la carpeta wwwroot
+            /// Para más información visitar : https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files
+            /// </summary>
             app.UseStaticFiles();
 
+
+            /// <summary>
+            /// Configuración de la Cookie de autorización  
+            /// </summary>
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",
@@ -131,6 +172,11 @@ namespace bd.webappth.web
                 DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\")),
             });
 
+
+            /// <summary>
+            /// Configuración del MVC, ruta que definimos (Controlador/Acción/Parametros)
+            /// Para más información visitar:https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing
+            /// </summary>
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

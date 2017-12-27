@@ -9,8 +9,38 @@ using bd.webappth.entidades.Utils;
 
 namespace bd.webappth.servicios.Servicios
 {
+    /// <summary>
+    /// Clase genérica para consumir los servicios la cuál hereda de una interfaz para poder realizar la 
+    /// injección de dependencia en los controladores MVC
+    /// en esta clase hay varios métodos sobrecargados para mejorar la experiencia del desarrollador 
+    /// y tener cubiertas gran parte de las necesidades.
+    /// Hay varios aspectos que hay que explicar como:
+    /// <typeparam name="T">Genérico que acepta cualquier tipo de objeto </typeparam>
+    /// <param name="model">acepta cualquier tipo de objeto</param>
+    /// <param name="baseAddress">¿Cuál es el Host donde encuentra el servicio web a consummir?</param>
+    /// <param name="url">Recurso que deseamos consumir</param>
+    /// Response: es una clase que tiene una variable bool que determina si lo que se solicito es satisfactorio o no
+    /// un String Mnesaje: para si se desea obtener algún mensaje desde el servicio.
+    /// y un objeto de tipo object para devolver del servicio el objeto que se desee
+    /// Nota:Tener en cuenta que esta clase no realiza ninguna acción sobre la base de datos.
+    /// Solo envía información a  los servicios Web.
+    /// En el caso cunatro introducimos un Object como parámetro tenemos que tener en cuenta que 
+    /// en el servicio web que estamos consumiento debe tener un objeto similar al que enviamos para 
+    /// poder deserializarlo.
+    /// Ejemplo:
+    /// MVC                                            ServicioWeb
+    /// Obteto 
+    /// Animal:Tamaño:int,Nombre:string                Animal:Color,Tamaño:int,Nombre:string
+    /// El nombre del objeto es indiferente,
+    /// pero sus atributos si deben ser iguales
+    /// es decir que en MVC puedo tener un objeto de Tipo Perro:Tamaño:int,Nombre:string y si lo envío al servicio 
+    /// y el que captura es Animal es indiferente porque se deserializa al los nombres de los atributos y su tipo de datos
+    /// y no al nombre del objeto.
+    /// 
+    /// </summary>
     public class ApiServicio : IApiServicio
     {
+       
         public async Task<Response> InsertarAsync<T>(T model, Uri baseAddress, string url)
         {
             try
