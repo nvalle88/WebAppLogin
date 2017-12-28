@@ -69,10 +69,6 @@ namespace bd.webappth.web
                                   policy => policy.Requirements.Add(new RolesRequirement()));
             });
 
-
-            
-           
-
             /// <summary>
             /// Se lee el fichero appsetting.json según las etiquetas expuestas en este.
             /// Ejemplo:HostServicioSeguridad es el host donde se encuentran los servicios de Seguridad.

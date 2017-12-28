@@ -31,7 +31,7 @@ namespace bd.webappth.web.Controllers
         /// Método encargado de listar los sistemas a los que tiene acceso el usuario autenticado
         /// </summary>
         /// <returns></returns>
-        [Authorize(ActiveAuthenticationSchemes ="Cookies")]
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Menu()
         {
             try
@@ -65,7 +65,7 @@ namespace bd.webappth.web.Controllers
         /// </summary>
         /// <param name="host">El host del donde se encuentra el sistema solicitado se obtiene desde la vista...</param>
         /// <returns></returns>
-        [Authorize(ActiveAuthenticationSchemes = "Cookies")]
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<ActionResult> AbrirSistema(string host)
         {
 
