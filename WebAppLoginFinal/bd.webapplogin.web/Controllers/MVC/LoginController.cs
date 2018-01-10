@@ -69,7 +69,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return RedirectToAction(nameof(LoginController.Index), new { mensaje = response.Message });
             }
 
-            var usuario = JsonConvert.DeserializeObject<Adscpassw>(response.Resultado.ToString());
+           // var usuario = JsonConvert.DeserializeObject<Adscpassw>(response.Resultado.ToString());
 
             var codificar = new Codificar
             {
@@ -81,7 +81,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             var permisoUsuario = new PermisoUsuario
             {
-                Usuario=usuario.AdpsLogin,
+                Usuario=login.Usuario,
                 Token= Convert.ToString(guidUsuario),
             };
 
@@ -90,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name,usuario.AdpsLogin),
+                new Claim(ClaimTypes.Name,login.Usuario),
                 new Claim(ClaimTypes.SerialNumber,Convert.ToString(guidUsuario))
                
             };
