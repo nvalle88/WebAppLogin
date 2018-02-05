@@ -1,4 +1,7 @@
-﻿using bd.webappth.entidades.Utils;
+﻿using bd.log.guardar.ObjectTranfer;
+using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +10,8 @@ namespace bd.webappth.servicios.Interfaces
 {
     public interface IApiServicio
     {
+        Task<Response> SalvarLog<T>(HttpContext context, EntradaLog model);
+        Task<Response> SalvarLog<T>(string path,HttpContext context, EntradaLog model,Login login);
         Task<Response> InsertarAsync<T>(T model,Uri baseAddress, string url );
         Task<Response> InsertarAsync<T>(object model, Uri baseAddress, string url);
         Task<Response> ObtenerElementoAsync<T>(T model, Uri baseAddress, string url) where T : class;

@@ -6,25 +6,8 @@
 @if (User.Identity.IsAuthenticated)
 {
 <div id="logo-group">
-    <span id="logo"> <img src="~/img/logo.png" alt="SmartAdmin"> </span>
-    
+    <span id="logo"> <img src="~/img/logo.png" alt="SmartAdmin"></span>
 </div>
 
-    var NombreUsuario = "";
-    @try
-      {
-       var claim = User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-       NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-      }
-     catch (Exception)
-     {
-     Url.Action("Index", "Login");
-     }
-    <!-- projects dropdown -->
-    <div class="project-context">
-        <i class=""></i>
-        <span class="project-selector dropdown-toggle" data-toggle="dropdown">Bienvenido:@NombreUsuario</span>
-    </div>
-    <!-- end projects dropdown -->
 }
 <!-- END HEADER -->

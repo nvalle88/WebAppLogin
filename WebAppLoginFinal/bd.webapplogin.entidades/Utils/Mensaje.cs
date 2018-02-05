@@ -6,6 +6,7 @@ namespace bd.webappth.entidades.Utils
 {
   public static class Mensaje
     {
+        public static string NoExisteModulo { get { return "No se ha encontrado el Módulo"; } }
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }
         public static string ExisteRegistro { get { return "Existe un registro de igual información"; } }
         public static string Satisfactorio { get { return "La acción se ha realizado satisfactoriamente"; } }

@@ -6,6 +6,14 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
+using Microsoft.AspNetCore.Http;
+using bd.log.guardar.ObjectTranfer;
+using bd.webappth.entidades.Negocio;
+using System.Linq;
+using System.Security.Claims;
+using bd.webappseguridad.entidades.ModeloTransferencia;
+using bd.log.guardar.Servicios;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.servicios.Servicios
 {
@@ -40,7 +48,104 @@ namespace bd.webappth.servicios.Servicios
     /// </summary>
     public class ApiServicio : IApiServicio
     {
-       
+        public async Task<Response> SalvarLog<T>(HttpContext context, EntradaLog model)
+        {
+            var NombreUsuario = "";
+            try
+            {
+                var claim = context.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddressSeguridad), "api/Adscmenus/GetMenuPadre");
+                var menu = JsonConvert.DeserializeObject<Adscmenu>(menuRespuesta.Resultado.ToString());
+
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = menu.AdmeAplicacion,
+                    ExceptionTrace = model.ExceptionTrace,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = context.Request.Path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = NombreUsuario,
+                };
+                var responseLog = await GuardarLogService.SaveLogEntry(Log);
+                return new Response { IsSuccess = responseLog.IsSuccess };
+            }
+            catch (Exception ex)
+            {
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = Mensaje.NoExisteModulo,
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = context.Request.Path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = NombreUsuario,
+                };
+                var resultado = await SalvarLog(Log);
+                return new Response { IsSuccess = resultado };
+            }
+
+        }
+        public async Task<Response> SalvarLog<T>(string path, HttpContext context, EntradaLog model, Login login)
+        {
+            var NombreUsuario = "";
+            try
+            {
+                var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddressSeguridad), "api/Adscmenus/GetMenuPadre");
+                var menu = JsonConvert.DeserializeObject<Adscmenu>(menuRespuesta.Resultado.ToString());
+
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = menu.AdmeAplicacion,
+                    ExceptionTrace = model.ExceptionTrace,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = login.Usuario,
+                };
+                var responseLog = await GuardarLogService.SaveLogEntry(Log);
+                return new Response { IsSuccess = responseLog.IsSuccess };
+            }
+            catch (Exception ex)
+            {
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = Mensaje.NoExisteModulo,
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = login.Usuario,
+                };
+                var resultado = await SalvarLog(Log);
+                return new Response { IsSuccess = resultado };
+            }
+
+        }
+        private async Task<bool> SalvarLog(LogEntryTranfer logEntryTranfer)
+        {
+            var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
+            if (responseLog.IsSuccess)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<Response> InsertarAsync<T>(T model, Uri baseAddress, string url)
         {
             try

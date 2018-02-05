@@ -1,10 +1,14 @@
-﻿using bd.webappth.servicios.Interfaces;
+﻿using bd.log.guardar.Inicializar;
+using bd.webapplogin.entidades.Utils;
+using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +53,22 @@ namespace bd.webappth.web
             /// </summary>
             services.AddMvc();
 
+            services.AddDataProtection()
+           .UseCryptographicAlgorithms(
+           new AuthenticatedEncryptionSettings()
+           {
+               EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+               ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+           });
+
+            services.AddDataProtection()
+            .SetDefaultKeyLifetime
+            (TimeSpan.FromDays
+             (Convert.ToInt32
+              (Configuration.GetSection("DiasValidosClaveEncriptada").Value)
+             )
+            );
+
             var appSettings = Configuration.GetSection("AppSettings");
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -70,22 +90,14 @@ namespace bd.webappth.web
             });
 
             /// <summary>
-            /// Se lee el fichero appsetting.json según las etiquetas expuestas en este.
-            /// Ejemplo:HostServicioSeguridad es el host donde se encuentran los servicios de Seguridad.
-            ///  ServiciosLog es el nombre con el que se encuentra en la base de datos, en la tabla adscsist
-            ///  de aquí se obtiene el valor del Hostdonde se encuentra el servicio de Log .
-            /// </summary>
-            var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
-            var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
-
-            /// <summary>
             /// Se llama a la clase inicializar para darle valor a las variables donde se hospedan los servicios
             /// que utiliza la aplicación
             /// Ejemplo:WebApp.BaseAddressSeguridad es el host donde se encuentran los servicios de Seguridad.
             ///  AppGuardarLog.BaseAddress es el host donde se encuentran los servicios de Log.
             /// </summary>
-            await InicializarWebApp.InicializarSeguridad(HostSeguridad);
-            await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
+            WebApp.BaseAddressSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+            AppGuardarLog.BaseAddress = Configuration.GetSection("HostServicioLog").Value;
+            WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
 
         }
 

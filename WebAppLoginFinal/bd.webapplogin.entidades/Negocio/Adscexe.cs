@@ -32,16 +32,16 @@ namespace bd.webappth.entidades.Negocio
         public string AdexSql { get; set; }
 
         [Display(Name = "Insertar")]
-        public bool Ins { get; set; }
+        public int? Ins { get; set; }
 
         [Display(Name = "Seleccionar")]
-        public bool Sel { get; set; }
+        public int? Sel { get; set; }
 
         [Display(Name = "Actualizar")]
-        public bool Upd { get; set; }
+        public int? Upd { get; set; }
 
         [Display(Name = "Eliminar")]
-        public bool Del { get; set; }
+        public int? Del { get; set; }
 
         public virtual Adscgrp Adex { get; set; }
         public virtual Adscmenu AdexNavigation { get; set; }

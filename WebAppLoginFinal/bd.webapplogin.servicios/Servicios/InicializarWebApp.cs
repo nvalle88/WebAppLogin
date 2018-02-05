@@ -29,7 +29,7 @@ namespace bd.webappth.servicios.Servicios
             using (HttpClient client = new HttpClient())
              {
                 var url = string.Format("{0}/{1}", "/api/Adscsists", id);
-                var uri = string.Format("{0}{1}", baseAddreess, url);
+                var uri = string.Format("{0}/{1}", baseAddreess, url);
                 var respuesta = await client.GetAsync(new Uri(uri));
 
                 var resultado = await respuesta.Content.ReadAsStringAsync();
@@ -38,23 +38,7 @@ namespace bd.webappth.servicios.Servicios
                 return sistema;
             }
         }
-        /// <summary>
-        /// Inicializar el host de Seguridad para poder consumir los servicios de seguridad
-        /// </summary>
-        /// <param name="baseAddreess">Host donde se encuentra el servicio de seguridad (appsetting.json)</param>
-        /// <returns></returns>
-        public static async Task InicializarSeguridad(string baseAddreess)
-        {
-            try
-            {
-                WebApp.BaseAddressSeguridad = baseAddreess;
-            }
-            catch (Exception)
-            {
-
-            }
-
-        }
+     
         /// <summary>
         /// Inicializar en la variable AppGuardarLog.BaseAddress el host de los Log 
         /// para poder consumir los servicios de log
@@ -62,12 +46,12 @@ namespace bd.webappth.servicios.Servicios
         /// <param name="id">Nombre del sistema de log igual que como esté en la base de datos</param>
         /// <param name="baseAddress">Host donde se encuentra el servicio de seguridad (appsetting.json)</param>
         /// <returns></returns>
-        public static async Task InicializarLogEntry(string id, Uri baseAddress)
+        public static async Task InicializarNombreSistema(string id, Uri baseAddress)
         {
             try
             {
                 var sistema = await ObtenerHostSistema(id, baseAddress);
-                AppGuardarLog.BaseAddress = sistema.AdstHost;
+                WebApp.NombreAplicacion = sistema.AdstSistema;
             }
             catch (Exception)
             {

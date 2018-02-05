@@ -14,6 +14,8 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Microsoft.AspNetCore.Authorization;
+using bd.webapplogin.entidades.Utils;
+using System.Net;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -42,18 +44,43 @@ namespace bd.webappth.web.Controllers.MVC
 
         public IActionResult Index(string mensaje, string returnUrl=null)
         {
+            
             InicializarMensaje(mensaje);
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-        /// <summary>
-        /// Autentica al usuario y crea el token en la base de datos
-        /// autentica el usuario en la cookie basado basado en los Claims 
-        /// </summary>
-        /// <param name="login"></param>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Login(Login login,string returnUrl=null)
+
+
+        private async void UsuarioBloqueado(Response response,Login login)
+        {
+            if (!string.IsNullOrEmpty(response.Resultado.ToString()))
+            {
+
+                var estaBloquado = JsonConvert.DeserializeObject<UsuarioBloqueado>(response.Resultado.ToString());
+                if (estaBloquado.EstaBloqueado)
+                {
+                    var responseLog = new EntradaLog
+                    {
+                        ExceptionTrace = null,
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Permission),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        ObjectPrevious = null,
+                        ObjectNext = null,
+                    };
+                    
+                    await apiServicio.SalvarLog<entidades.Utils.Response>("/Login/UsuarioBloqueado", HttpContext, responseLog,login);
+
+                };
+            };
+        }
+            /// <summary>
+            /// Autentica al usuario y crea el token en la base de datos
+            /// autentica el usuario en la cookie basado basado en los Claims 
+            /// </summary>
+            /// <param name="login"></param>
+            /// <param name="returnUrl"></param>
+            /// <returns></returns>
+            public async Task<IActionResult> Login(Login login,string returnUrl=null)
         {
 
             if (!ModelState.IsValid)
@@ -64,6 +91,9 @@ namespace bd.webappth.web.Controllers.MVC
            var response = await apiServicio.ObtenerElementoAsync1<Response>(login,
                                                              new Uri(WebApp.BaseAddressSeguridad),
                                                              "api/Adscpassws/Login");
+
+            UsuarioBloqueado(response,login);
+            
             if (!response.IsSuccess)
             {
                 return RedirectToAction(nameof(LoginController.Index), new { mensaje = response.Message });
@@ -111,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
         /// Elimina el Token de la base de datos y desautentica al usuario de la Cookie
         /// </summary>
         /// <returns></returns>
-        [Authorize(Policy = "EstaAutorizado")]
+        [Authorize(Policy = PoliticaSeguridad.TienePermiso)]
         public async Task<IActionResult> Salir()
         {
             try
@@ -138,6 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
+                await HttpContext.Authentication.SignOutAsync("Cookies");
                 return RedirectToAction(nameof(LoginController.Index), "Login");
             }
 
@@ -202,7 +233,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un estado civil",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
