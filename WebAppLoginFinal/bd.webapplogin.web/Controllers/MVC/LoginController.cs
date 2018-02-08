@@ -193,7 +193,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return null;
             }

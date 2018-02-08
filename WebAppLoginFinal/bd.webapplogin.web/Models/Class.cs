@@ -56,7 +56,7 @@ namespace bd.webappth.web.Models
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 context.Fail();
                 return Task.CompletedTask;

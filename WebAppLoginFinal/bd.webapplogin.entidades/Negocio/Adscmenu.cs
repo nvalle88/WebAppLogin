@@ -67,16 +67,12 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Estado")]
-        [StringLength(100, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
         public string AdmeEstado { get; set; }
 
         [Display(Name = "Controlador")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
         public string AdmeControlador { get; set; }
-
-        [Display(Name = "Acción del controlador")]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
-        public string AdmeAccionControlador { get; set; }
 
         public virtual ICollection<Adscexe> Adscexe { get; set; }
         public virtual Adscsist AdmeSistemaNavigation { get; set; }

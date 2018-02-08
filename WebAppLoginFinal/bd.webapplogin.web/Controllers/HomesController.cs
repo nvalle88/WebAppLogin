@@ -131,13 +131,13 @@ namespace bd.webappth.web.Controllers
 
                     return View(lista);
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
                   
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 return RedirectToAction(nameof(LoginController.Index), "Login");

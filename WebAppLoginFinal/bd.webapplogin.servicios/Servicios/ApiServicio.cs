@@ -95,7 +95,7 @@ namespace bd.webappth.servicios.Servicios
         }
         public async Task<Response> SalvarLog<T>(string path, HttpContext context, EntradaLog model, Login login)
         {
-            var NombreUsuario = "";
+           
             try
             {
                 var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddressSeguridad), "api/Adscmenus/GetMenuPadre");
@@ -221,7 +221,7 @@ namespace bd.webappth.servicios.Servicios
                     return respuesta;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -385,7 +385,7 @@ namespace bd.webappth.servicios.Servicios
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return null;
             }
@@ -406,7 +406,7 @@ namespace bd.webappth.servicios.Servicios
                 }
             }
 
-                catch (Exception ex)
+                catch (Exception )
             {
                 return new List<T>();
             }
