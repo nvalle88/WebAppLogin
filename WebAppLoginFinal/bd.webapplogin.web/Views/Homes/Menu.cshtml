@@ -47,7 +47,7 @@
                             <td class="text-center" style="width: 40px;"><i class="fa fa-table fa-2x text-muted"></i></td>
                             <td>
                                 <h4>
-                                    <a href='@Url.Action("AbrirSistema", "Homes", new { host = item.AdstHost})' target="_blank">
+                                    <a href='@Url.Action("AbrirSistema", "Homes", new { host = item.AdstHost})'  target="_blank">
                                         @Html.DisplayFor(modelItem => item.AdstDescripcion)
                                     </a>
                                     <small>@Html.DisplayFor(modelItem => item.AdstSistema)</small>
@@ -65,7 +65,7 @@
         <!-- col -->
         <div class="col-xs-12 col-sm-4 col-md-7 col-lg-4">
             <h4 class="page-header txt-color-blueDark">
-                <i class="fa-fw fa fa-key"></i> <a asp-action="CambiarContrasena">Cambiar contrase&ntilde;a</a>
+                <i class="fa-fw fa fa-key"></i> <a asp-action="CambiarContrasena" id="cambiarcontrasena" onclick="initLoadingFormAction('cambiarcontrasena')">Cambiar contrase&ntilde;a</a>
             </h4>
         </div>
     </div>

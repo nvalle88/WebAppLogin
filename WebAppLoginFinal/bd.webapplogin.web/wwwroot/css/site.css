@@ -94,3 +94,29 @@
     height: 32px !important;
     width: 32px !important;
 }
+button.btn.btn-default.btn-secondary.fileinput-remove.fileinput-remove-button {
+    height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+div.input-group.file-caption-main > div.input-group-btn > div {
+    height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
+}
+
+div.file-caption.form-control.kv-fileinput-caption.icon-visible > input {
+    padding-top: 7px !important;
+    padding-left: 30px !important;
+}
+
+div.file-caption.form-control.kv-fileinput-caption.icon-visible > span {
+    padding-top: 7px !important;
+}
+
+div.file-caption.form-control.kv-fileinput-caption > input {
+    padding-top: 7px !important;
+    padding-left: 5px !important;
+}

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.entidades.Utils;
@@ -13,13 +12,14 @@ using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
-using Microsoft.AspNetCore.Authorization;
 using bd.webapplogin.entidades.Utils;
-using System.Net;
+using bd.webappth.web.Models;
+using bd.webapplogin.web.Models;
+using Microsoft.AspNetCore.Authorization;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-   
     public class LoginController : Controller
     {
 
@@ -41,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
-
+        [AllowAnonymous]
         public IActionResult Index(string mensaje, string returnUrl=null)
         {
             
@@ -73,14 +73,15 @@ namespace bd.webappth.web.Controllers.MVC
                 };
             };
         }
-            /// <summary>
-            /// Autentica al usuario y crea el token en la base de datos
-            /// autentica el usuario en la cookie basado basado en los Claims 
-            /// </summary>
-            /// <param name="login"></param>
-            /// <param name="returnUrl"></param>
-            /// <returns></returns>
-            public async Task<IActionResult> Login(Login login,string returnUrl=null)
+        /// <summary>
+        /// Autentica al usuario y crea el token en la base de datos
+        /// autentica el usuario en la cookie basado basado en los Claims 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(Login login,string returnUrl=null)
         {
 
             if (!ModelState.IsValid)
@@ -96,7 +97,7 @@ namespace bd.webappth.web.Controllers.MVC
             
             if (!response.IsSuccess)
             {
-                return RedirectToAction(nameof(LoginController.Index), new { mensaje = response.Message });
+                return this.Redireccionar("Login", "Index", $"{Mensaje.Aviso}|{response.Message}|{"30000"}");
             }
 
            // var usuario = JsonConvert.DeserializeObject<Adscpassw>(response.Resultado.ToString());
@@ -131,7 +132,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (string.IsNullOrEmpty(returnUrl))
             {
-                return RedirectToActionPermanent(nameof(HomesController.Menu), "Homes");
+                return this.Redireccionar("Homes", "Menu", $"{Mensaje.Informacion}|{Mensaje.Bienvenido}|{TiempoMensaje.Tiempo1}");
             }
 
             return LocalRedirect(returnUrl);

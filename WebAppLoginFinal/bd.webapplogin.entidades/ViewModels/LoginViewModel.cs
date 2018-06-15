@@ -7,10 +7,12 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class Login
     {
-        [Required]
+        [Display(Name = "Usuario")]
+        [Required(ErrorMessage = "El {0} es obligatorio")]
         public string Usuario { get; set; }
 
-        [Required]
+        [Display(Name ="Contraseña")]
+        [Required(ErrorMessage ="El {0} es obligatorio")]
         [DataType(DataType.Password)]
         public string Contrasena { get; set; }
 

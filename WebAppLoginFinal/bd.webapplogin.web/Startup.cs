@@ -1,5 +1,6 @@
 ﻿using bd.log.guardar.Inicializar;
 using bd.webapplogin.entidades.Utils;
+using bd.webapplogin.web.Models;
 using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
@@ -53,6 +54,18 @@ namespace bd.webappth.web
             /// </summary>
             services.AddMvc();
 
+            services.AddDistributedMemoryCache();
+
+
+            Session.TiempoSessionMinutos = Convert.ToInt32(Configuration.GetSection("TiempoSessionMinutos").Value);
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromMinutes(Session.TiempoSessionMinutos);
+                //options.Cookie.HttpOnly = true;
+            });
+
             services.AddDataProtection()
            .UseCryptographicAlgorithms(
            new AuthenticatedEncryptionSettings()
@@ -88,6 +101,16 @@ namespace bd.webappth.web
                 options.AddPolicy("EstaAutorizado",
                                   policy => policy.Requirements.Add(new RolesRequirement()));
             });
+
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(typeof(ShortCircuitingResourceFilterAttribute), 0);
+            //    options.Filters.Add(typeof(Filtro),2);
+            //});
+
+            WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
+            Mensaje.Bienvenido = Configuration.GetSection("MensajeInicio").Value;
+            TiempoMensaje.Tiempo1 = Convert.ToInt32(Configuration.GetSection("Tiempo1").Value);
 
             /// <summary>
             /// Se llama a la clase inicializar para darle valor a las variables donde se hospedan los servicios
@@ -172,7 +195,7 @@ namespace bd.webappth.web
             {
                 AuthenticationScheme = "Cookies",
                 LoginPath = new PathString("/Login/Index"),
-                AccessDeniedPath = new PathString("/Homes/AccesoDenegado"),
+                AccessDeniedPath = new PathString("/Homes/SeccionCerrada"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieName = "ASPTest",
@@ -185,6 +208,7 @@ namespace bd.webappth.web
             /// Configuración del MVC, ruta que definimos (Controlador/Acción/Parametros)
             /// Para más información visitar:https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing
             /// </summary>
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -9,5 +9,6 @@ namespace bd.webappth.entidades.Utils
         public static string BaseAddressSeguridad { get; set; }
 
         public static string NombreAplicacion { get; set; }
+        public static string BaseAddressWebAppLogin { get; set; }
     }
 }

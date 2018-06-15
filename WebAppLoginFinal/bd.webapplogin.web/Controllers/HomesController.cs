@@ -28,7 +28,7 @@ namespace bd.webappth.web.Controllers
             this.apiServicio=apiServicio;
         }
 
-        public IActionResult AccesoDenegado()
+        public IActionResult SeccionCerrada()
         {
             return View();
         }

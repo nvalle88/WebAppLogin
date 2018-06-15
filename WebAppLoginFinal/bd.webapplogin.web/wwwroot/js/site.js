@@ -1,4 +1,18 @@
-﻿function Init_Select2() {
+﻿
+
+function Init_Touchspin() {
+    $('.touchspin_tasa').TouchSpin({
+        min: 0.00,
+        max: 99999999999,
+        decimals: 2,
+        prefix: '$',
+        step: 0.01,
+        buttondown_class: 'btn btn-primary',
+        buttonup_class: 'btn btn-primary'
+    });
+}
+
+function Init_Select2() {
     $('select').select2({
         theme: 'classic',
         allowClear: false,
@@ -7,14 +21,112 @@
     });
 }
 
+function cargando() {
+    mostrarLoadingPanel("content", "")
+}
 
 function mostrarLoadingPanel(idElemento, texto) {
     $('#' + idElemento).waitMe({
         effect: 'roundBounce',
-        text: texto != null ? texto : 'Procesando datos, por favor espere...',
+        text: texto,
         bg: 'rgba(255, 255, 255, 0.7)',
-        color: '#ef4c0c'
+        color: '#ef4c0c',
+        fontSize: '15px'
     });
+}
+
+function mostrarNotificacion(titulo, texto) {
+    var color = "";
+    var icon = "";
+    switch (titulo) {
+        case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
+        case "Error": color = "#C46A69"; icon = "times-circle"; break;
+        case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break;
+        case "Success": color = "#1D6922"; icon = "check-circle"; break;
+    }
+    $.smallBox({
+        title: titulo,
+        content: texto,
+        color: color,
+        icon: "fa fa-" + icon + " shake animated",
+        timeout: 6000
+    });
+}
+
+function mostrarNotificacionTimer(titulo, texto, timer) {
+    var color = "";
+    var icon = "";
+    switch (titulo) {
+        case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
+        case "Error": color = "#C46A69"; icon = "times-circle"; break;
+        case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break; 
+        case "Success": color = "#1D6922"; icon = "check-circle"; break;
+    }
+    $.smallBox({
+        title: titulo,
+        content: texto,
+        color: color,
+        icon: "fa fa-" + icon + " shake animated",
+        timeout: timer
+    });
+}
+
+function Asignar_Codigo_Barras(idElemento, valor) {
+    JsBarcode("#" + idElemento, valor, {
+        format: "CODE128",
+        displayValue: true,
+        fontSize: 20
+    });
+}
+function Init_FileInput(idElemento) {
+    $("#" + idElemento).fileinput({
+        showUpload: false,
+        language: 'es'
+    });
+}
+function obtenerIdAjax(id) {
+    try {
+        return parseInt(id);
+    } catch (e) {
+        return -1;
+    }
+}
+
+function Gestionar_Msg() {
+    var mensaje = $("#span_mensaje").html();
+    if (mensaje != "" && mensaje != null) {
+        var arr_msg = mensaje.split('|');
+        mostrarNotificacion(arr_msg[0], arr_msg[1]);
+    }
+
+    Gestionar_Msg_Timer();
+}
+
+function Gestionar_Msg_Timer() {
+    var mensaje2 = $("#span_mensaje_timer").html();
+    if (mensaje2 != "" && mensaje2 != null) {
+        var arr_msg2 = mensaje2.split('|');
+
+        mostrarNotificacionTimer(arr_msg2[0], arr_msg2[1], arr_msg2[2]);
+    }
+}
+
+function initLoadingForm() {
+    $(this).on("submit", function (event) {
+        if (!$(event.target).hasClass("noFormLoading")) {
+            $("#btn-guardar").prop("disabled", "disabled");
+            $("#btn-guardar").html("<i class='fa fa-spinner fa-spin'></i> " + $("#btn-guardar").html());
+        }
+    });
+}
+
+function initLoadingFormAction(id) {
+   
+        if (!$(event.target).hasClass("noFormLoading")) {
+            $("#" + id).prop("disabled", "disabled");
+            $("#" + id).html("<i class='fa fa-spinner fa-spin'></i> " + $("#" + id).html());
+        }
+    
 }
 
 function tablamodal() {

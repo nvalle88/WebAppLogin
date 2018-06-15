@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div id="content" class="container center-block" >
+<div id="content" class="container center-block">
     <div class="row">
         @*@{ await Html.RenderPartialAsync("_LoginText"); }*@
         <div class="col-lg-3"></div>
@@ -10,7 +10,7 @@
             <div class="center-block no-padding">
                 <form asp-action="Login" method="POST" id="login-form" class="smart-form client-form">
                     <header>
-                        <img src="~/img/Imagenes/BdeEcuador.png" alt="" class="center-canvas img-thumbnail"  />
+                        <img src="~/img/Imagenes/BdeEcuador.png" alt="" class="center-canvas img-thumbnail" />
                     </header>
                     @Html.AntiForgeryToken()
                     @Html.ValidationBootstrap()
@@ -35,6 +35,7 @@
                                 <i class="icon-append fa fa-user"></i>
                                 <input asp-for="Usuario" placeholder="Nombre de Usuario">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor ingrese su nombre de usuario</b>
+                                <span asp-validation-for="Usuario" class="text-danger"></span>
                             </label>
                         </section>
                         <section>
@@ -43,26 +44,25 @@
                                 <i class="icon-append fa fa-lock"></i>
                                 <input asp-for="Contrasena" type="password" placeholder="contrase&ntilde;a">
                                 <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Por favor ingrese su contrase&ntilde;a</b>
+                                <span asp-validation-for="Contrasena" class="text-danger"></span>
                             </label>
                         </section>
                     </fieldset>
                     <footer>
-                        <button type="submit" class="btn btn-primary">
-                            Aceptar
-                        </button>
+                        <button type="submit" class="btn btn-primary" id="btn-guardar">Aceptar</button>
                     </footer>
                 </form>
             </div>
-           
+
         </div>
     </div>
 </div>
 
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
 
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    </script>
+    <script src='~/js/site.js'></script>
 }
 

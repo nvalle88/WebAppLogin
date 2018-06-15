@@ -4,10 +4,10 @@
   "dependencies": {
     "bootstrap": "3.3.7",
     "jquery": "3.2.1",
-    "jquery-validation": "1.17.0",
-    "jquery-validation-unobtrusive": "3.2.6",
     "select2": "4.0.4",
-    "font-awesome": "v4.7.0"
+    "font-awesome": "v4.7.0",
+    "jquery-validation": "1.17.0",
+    "jquery-validation-unobtrusive": "v3.2.10"
   },
   "resolutions": {
     "jquery": "3.2.1",

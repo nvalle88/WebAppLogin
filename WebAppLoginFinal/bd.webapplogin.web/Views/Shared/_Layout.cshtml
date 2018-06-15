@@ -29,6 +29,10 @@
     <link rel="apple-touch-startup-image" href="~/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="~/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="~/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("css", false)
 </head>
 <body class="@ViewBag.PageClass @Settings.Value.CurrentTheme">
     <header id="header">
@@ -46,6 +50,8 @@
         await Html.RenderPartialAsync("_Footer", User.Identity.IsAuthenticated);
         Html.RenderPartialIf("_Tiles", Settings.Value.EnableTiles);
     }
+    <span class="hide" id="span_mensaje">@TempData["Mensaje"]</span>
+    <span class="hide" id="span_mensaje_timer">@TempData["MensajeTimer"]</span>
     @{ await Html.RenderPartialAsync("_Scripts"); }
     @RenderSection("scripts", false)
 </body>
