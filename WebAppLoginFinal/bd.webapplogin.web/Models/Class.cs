@@ -52,6 +52,7 @@ namespace bd.webappth.web.Models
                 }
                 else
                 {
+                    httpContext.Authentication.SignOutAsync("Cookies");
                     context.Fail();
                 }
                 
