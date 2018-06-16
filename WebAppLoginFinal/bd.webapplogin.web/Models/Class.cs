@@ -53,6 +53,10 @@ namespace bd.webappth.web.Models
                 else
                 {
                     httpContext.Authentication.SignOutAsync("Cookies");
+                    foreach (var cookie in httpContext.Request.Cookies.Keys)
+                    {
+                        httpContext.Response.Cookies.Delete(cookie);
+                    }
                     context.Fail();
                 }
                 
