@@ -98,7 +98,7 @@ namespace bd.webappth.web.Controllers.MVC
             
             if (!response.IsSuccess)
             {
-                return this.Redireccionar("Login", "Index", $"{Mensaje.Aviso}|{response.Message}|{"30000"}");
+                return this.Redireccionar("Login", "Index", $"{Mensaje.Aviso}|{response.Message}|{TiempoMensaje.Tiempo1}");
             }
 
            // var usuario = JsonConvert.DeserializeObject<Adscpassw>(response.Resultado.ToString());
@@ -138,7 +138,7 @@ namespace bd.webappth.web.Controllers.MVC
             await HttpContext.Authentication.SignInAsync("Cookies", principal, new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = true });
 
             if (string.IsNullOrEmpty(returnUrl))
-                return this.Redireccionar("Homes", "Menu", $"{Mensaje.Informacion}|{Mensaje.Bienvenido}|{TiempoMensaje.Tiempo1}");
+                return this.Redireccionar("Homes", "Menu", $"{Mensaje.Informacion}|{login.Usuario}:{Mensaje.Bienvenido}|{TiempoMensaje.Tiempo1}");
 
             return LocalRedirect(returnUrl);
         }
@@ -167,6 +167,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     await HttpContext.Authentication.SignOutAsync("Cookies");
+                    foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                    {
+                        HttpContext.Response.Cookies.Delete(cookie);
+                    }
                     return RedirectToAction(nameof(LoginController.Index), "Login");
                 }
                 return RedirectToAction(nameof(HomesController.Menu), "Homes");
@@ -174,6 +178,10 @@ namespace bd.webappth.web.Controllers.MVC
             catch (Exception)
             {
                 await HttpContext.Authentication.SignOutAsync("Cookies");
+                foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                {
+                    HttpContext.Response.Cookies.Delete(cookie);
+                }
                 return RedirectToAction(nameof(LoginController.Index), "Login");
             }
 
