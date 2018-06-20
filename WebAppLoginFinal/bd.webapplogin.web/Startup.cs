@@ -121,7 +121,7 @@ namespace bd.webappth.web
             WebApp.BaseAddressSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
             AppGuardarLog.BaseAddress = Configuration.GetSection("HostServicioLog").Value;
             WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
-
+            WebApp.BaseAddressTH = Configuration.GetSection("HostServiciosTalentoHumano").Value;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

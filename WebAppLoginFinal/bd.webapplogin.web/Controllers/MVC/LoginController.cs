@@ -17,6 +17,8 @@ using bd.webappth.web.Models;
 using bd.webapplogin.web.Models;
 using Microsoft.AspNetCore.Authorization;
 using bd.webappth.servicios.Extensores;
+using bd.webapplogin.entidades.ObjectTransfer;
+using System.Collections.Generic;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -83,7 +85,6 @@ namespace bd.webappth.web.Controllers.MVC
         [AllowAnonymous]
         public async Task<IActionResult> Login(Login login,string returnUrl=null)
         {
-
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(LoginController.Index));
@@ -112,32 +113,34 @@ namespace bd.webappth.web.Controllers.MVC
 
             var permisoUsuario = new PermisoUsuario
             {
-                Usuario=login.Usuario,
-                Token= Convert.ToString(guidUsuario),
+                Usuario = login.Usuario,
+                Token = Convert.ToString(guidUsuario),
+            };
+            var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarToken");
+            var sucursalUsuario = await apiServicio.ObtenerElementoAsync1<Sucursal>(new IdFiltrosViewModel { NombreUsuario = login.Usuario }, new Uri(WebApp.BaseAddressTH), "api/Sucursal/ObtenerSucursalPorEmpleado");
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, login.Usuario),
+                new Claim(ClaimTypes.SerialNumber, Convert.ToString(guidUsuario))
             };
 
-            var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario,new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarToken");
-
-
-            var claims = new[]
+            if (sucursalUsuario != null)
             {
-                new Claim(ClaimTypes.Name,login.Usuario),
-                new Claim(ClaimTypes.SerialNumber,Convert.ToString(guidUsuario))
-               
-            };
+                if (sucursalUsuario.IdSucursal > 0)
+                    claims.Add(new Claim("IdSucursal", sucursalUsuario.IdSucursal.ToString()));
 
-            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims,"Cookies"));
-
-           await HttpContext.Authentication.SignInAsync("Cookies", principal, new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = true });
-
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-               
-                return this.Redireccionar("Homes", "Menu", $"{Mensaje.Informacion}|{login.Usuario}:{Mensaje.Bienvenido}|{TiempoMensaje.Tiempo1}");
+                if (!String.IsNullOrEmpty(sucursalUsuario.Nombre))
+                    claims.Add(new Claim("NombreSucursal", sucursalUsuario.Nombre));
             }
 
-            return LocalRedirect(returnUrl);
+            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims,"Cookies"));
+            await HttpContext.Authentication.SignInAsync("Cookies", principal, new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = true });
 
+            if (string.IsNullOrEmpty(returnUrl))
+                return this.Redireccionar("Homes", "Menu", $"{Mensaje.Informacion}|{login.Usuario}:{Mensaje.Bienvenido}|{TiempoMensaje.Tiempo1}");
+
+            return LocalRedirect(returnUrl);
         }
         /// <summary>
         /// Elimina el Token de la base de datos y desautentica al usuario de la Cookie
