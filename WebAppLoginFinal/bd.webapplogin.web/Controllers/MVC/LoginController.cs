@@ -114,25 +114,45 @@ namespace bd.webappth.web.Controllers.MVC
             var permisoUsuario = new PermisoUsuario
             {
                 Usuario = login.Usuario,
-                Token = Convert.ToString(guidUsuario),
+                Token = Convert.ToString(guidUsuario)
             };
             var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/SalvarToken");
-            var sucursalUsuario = await apiServicio.ObtenerElementoAsync1<Sucursal>(new IdFiltrosViewModel { NombreUsuario = login.Usuario }, new Uri(WebApp.BaseAddressTH), "api/Sucursal/ObtenerSucursalPorEmpleado");
-
+            var dependenciaDatosViewModel = await apiServicio.ObtenerElementoAsync1<DependenciaDatosViewModel>(new IdFiltrosViewModel { NombreUsuario = login.Usuario }, new Uri(WebApp.BaseAddressTH), "api/Dependencias/ObtenerDependenciaDatosViewModelPorUsuarioActual");
+            var empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(login.Usuario, new Uri(WebApp.BaseAddressTH), "api/Empleados/EmpleadoSegunNombreUsuario");
+			var listadoAdscmiems = (await apiServicio.Listar<Adscmiem>(new Uri(WebApp.BaseAddressSeguridad), "api/Adscmiems/ListarAdscmiem")).Where(c=> c.AdmiEmpleado == login.Usuario);
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, login.Usuario),
                 new Claim(ClaimTypes.SerialNumber, Convert.ToString(guidUsuario))
             };
 
-            if (sucursalUsuario != null)
+            if (dependenciaDatosViewModel != null)
             {
-                if (sucursalUsuario.IdSucursal > 0)
-                    claims.Add(new Claim("IdSucursal", sucursalUsuario.IdSucursal.ToString()));
+                if (dependenciaDatosViewModel.IdSucursal > 0)
+                    claims.Add(new Claim("IdSucursal", dependenciaDatosViewModel.IdSucursal.ToString()));
 
-                if (!String.IsNullOrEmpty(sucursalUsuario.Nombre))
-                    claims.Add(new Claim("NombreSucursal", sucursalUsuario.Nombre));
+                if (!String.IsNullOrEmpty(dependenciaDatosViewModel.NombreSucursal))
+                    claims.Add(new Claim("NombreSucursal", dependenciaDatosViewModel.NombreSucursal));
+
+                if (dependenciaDatosViewModel.IdDependencia > 0)
+                    claims.Add(new Claim("IdDependencia", dependenciaDatosViewModel.IdDependencia.ToString()));
+
+                if (!String.IsNullOrEmpty(dependenciaDatosViewModel.NombreDependencia))
+                    claims.Add(new Claim("NombreDependencia", dependenciaDatosViewModel.NombreDependencia));
             }
+
+            if (empleado != null)
+            {
+                if (empleado.IdEmpleado > 0)
+                    claims.Add(new Claim("IdEmpleado", empleado.IdEmpleado.ToString()));
+
+                if (empleado.Persona != null)
+                    claims.Add(new Claim("NombreEmpleado", $"{empleado.Persona.Nombres} {empleado.Persona.Apellidos}"));
+            }
+			
+			foreach (var item in listadoAdscmiems)
+                claims.Add(new Claim("ADMI_Grupo", item.AdmiGrupo));
 
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims,"Cookies"));
             await HttpContext.Authentication.SignInAsync("Cookies", principal, new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = true });
